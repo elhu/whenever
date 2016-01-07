@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'active_support/core_ext/integer/time'
 
 class CronTest < Whenever::TestCase
   should "raise if less than 1 minute" do
@@ -210,6 +211,12 @@ class CronParseShortcutsTest < Whenever::TestCase
     assert_raises ArgumentError do
       parse_time(:daily, nil, '4:20pm')
     end
+  end
+end
+
+class CronParseRubyTimeTest < Whenever::TestCase
+  should "process things like `1.day` correctly" do
+    assert_equal "0 0 * * *", parse_time(1.day)
   end
 end
 
